@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{.Title}}</h1>
+    <form action="/upload/csv" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv">
+        <button type="submit">Upload CSV</button>
+    </form>
+    <button onclick="window.location.href='/report/csv'">Download CSV</button>
+    <table>
+        <thead>
+            <tr>
+                <th>UserID</th>
+                <th>UserName</th>
+                <th>LoginCount</th>
+                <th>LastLogin</th>
+                <th>Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .UserStats}}
+            <tr>
+                <td>{{.UserID}}</td>
+                <td>{{.UserName}}</td>
+                <td>{{.LoginCount}}</td>
+                <td>{{.LastLogin.Format "2006-01-02 15:04:05"}}</td>
+                <td>{{.Active}}</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+</body>
+</html>
